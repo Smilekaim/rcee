@@ -3,8 +3,8 @@ const axios = require('axios');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-const TELEGRAM_BOT_TOKEN = process.env.7886439464:AAEBK3bhK0jXUeyZRBTPNdqVySVAnVNhH7k;
-const TELEGRAM_CHAT_ID = process.env.909238194;
+const TELEGRAM_BOT_TOKEN = process.env.BOT_TOKEN;
+const TELEGRAM_CHAT_ID = process.env.CHAT_ID;
 
 app.get('/', async (req, res) => {
   await axios.get(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`, {
