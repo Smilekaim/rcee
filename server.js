@@ -7,13 +7,23 @@ const TELEGRAM_BOT_TOKEN = process.env.BOT_TOKEN;
 const TELEGRAM_CHAT_ID = process.env.CHAT_ID;
 
 app.get('/', async (req, res) => {
-  await axios.get(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`, {
-    params: {
-      chat_id: TELEGRAM_CHAT_ID,
-      text: `🚨 Someone visited your Render URL!`
-    }
-  });
-  res.send('You triggered the notification!');
+  // Extract IP from headers (works behind proxies/load balancers like Render)
+  const ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
+
+  const message = `🚨 Someone visited your URL\n🕵️ IP: ${ip}`;
+
+  try {
+    await axios.get(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`, {
+      params: {
+        chat_id: TELEGRAM_CHAT_ID,
+        text: message
+      }
+    });
+    res.send('Notification sent with IP!');
+  } catch (err) {
+    console.error('Telegram Error:', err.message);
+    res.status(500).send('Failed to notify');
+  }
 });
 
 app.listen(PORT, () => {
